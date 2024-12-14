@@ -22,7 +22,7 @@ import { storeData } from "@/utils/storage";
 
 export default function ComposeScreen() {
   const [posts, setPosts] = useState<Post[]>([
-    { id: 1, content: "", images: [], location: "" },
+    { id: 1, content: "", images: [], location: "", type: "meditation", details: "" },
   ]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -61,6 +61,8 @@ export default function ComposeScreen() {
     content: string;
     images: string[];
     location: string;
+    type: "meditation" | "sleep" | "mindfulness";
+    details: string;
   }
 
   const handleContentChange = (id: number, content: string) => {
@@ -69,10 +71,22 @@ export default function ComposeScreen() {
     );
   };
 
+  const handleDetailsChange = (id: number, details: string) => {
+    setPosts(
+      posts.map((post: Post) => (post.id === id ? { ...post, details } : post))
+    );
+  };
+
+  const handleTypeChange = (id: number, type: "meditation" | "sleep" | "mindfulness") => {
+    setPosts(
+      posts.map((post: Post) => (post.id === id ? { ...post, type } : post))
+    );
+  };
+
   const addNewPost = () => {
     setPosts([
       ...posts,
-      { id: posts.length + 1, content: "", images: [], location: "" },
+      { id: posts.length + 1, content: "", images: [], location: "", type: "meditation", details: "" },
     ]);
   };
 
@@ -167,6 +181,14 @@ export default function ComposeScreen() {
             autoFocus
           />
         </View>
+        <TextInput
+          style={styles.detailsInput}
+          placeholder="Enter details"
+          placeholderTextColor="#657786"
+          multiline
+          value={item.details}
+          onChangeText={(text) => handleDetailsChange(item.id, text)}
+        />
         <FlatList
           data={item.images}
           numColumns={3}
@@ -328,6 +350,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     minHeight: 100,
     color: "#14171A",
+  },
+  detailsInput: {
+    fontSize: 16,
+    color: "#14171A",
+    marginTop: 8,
   },
   footer: {
     flexDirection: "row",

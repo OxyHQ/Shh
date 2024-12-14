@@ -11,7 +11,7 @@ export const BottomBar = () => {
         route: string;
     }
 
-    const handlePress = (route: '/' | '/compose' | '/explore' | '/notifications' | '/messages') => {
+    const handlePress = (route: '/' | '/compose' | '/explore' | '/notifications' | '/messages' | '/meditate' | '/sleep' | '/mindfulness') => {
         setActiveRoute(route);
         router.push(route);
     };
@@ -22,17 +22,17 @@ export const BottomBar = () => {
                 <Ionicons name="home" size={28} color={activeRoute === '/' ? '#6200ee' : '#757575'} />
                 <Text style={[styles.label, activeRoute === '/' && styles.activeLabel]}>Home</Text>
             </Pressable>
-            <Pressable onPress={() => handlePress('/explore')} style={[styles.tab, activeRoute === '/explore' && styles.active]}>
-                <Ionicons name="search" size={28} color={activeRoute === '/explore' ? '#6200ee' : '#757575'} />
-                <Text style={[styles.label, activeRoute === '/explore' && styles.activeLabel]}>Explore</Text>
+            <Pressable onPress={() => handlePress('/meditate')} style={[styles.tab, activeRoute === '/meditate' && styles.active]}>
+                <Ionicons name="meditation" size={28} color={activeRoute === '/meditate' ? '#6200ee' : '#757575'} />
+                <Text style={[styles.label, activeRoute === '/meditate' && styles.activeLabel]}>Meditate</Text>
             </Pressable>
-            <Pressable onPress={() => handlePress('/notifications')} style={[styles.tab, activeRoute === '/notifications' && styles.active]}>
-                <Ionicons name="notifications" size={28} color={activeRoute === '/notifications' ? '#6200ee' : '#757575'} />
-                <Text style={[styles.label, activeRoute === '/notifications' && styles.activeLabel]}>Notifications</Text>
+            <Pressable onPress={() => handlePress('/sleep')} style={[styles.tab, activeRoute === '/sleep' && styles.active]}>
+                <Ionicons name="bed" size={28} color={activeRoute === '/sleep' ? '#6200ee' : '#757575'} />
+                <Text style={[styles.label, activeRoute === '/sleep' && styles.activeLabel]}>Sleep</Text>
             </Pressable>
-            <Pressable onPress={() => handlePress('/messages')} style={[styles.tab, activeRoute === '/messages' && styles.active]}>
-                <Ionicons name="mail" size={28} color={activeRoute === '/messages' ? '#6200ee' : '#757575'} />
-                <Text style={[styles.label, activeRoute === '/messages' && styles.activeLabel]}>Messages</Text>
+            <Pressable onPress={() => handlePress('/mindfulness')} style={[styles.tab, activeRoute === '/mindfulness' && styles.active]}>
+                <Ionicons name="leaf" size={28} color={activeRoute === '/mindfulness' ? '#6200ee' : '#757575'} />
+                <Text style={[styles.label, activeRoute === '/mindfulness' && styles.activeLabel]}>Mindfulness</Text>
             </Pressable>
         </View>
     );

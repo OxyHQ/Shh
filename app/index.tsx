@@ -7,18 +7,24 @@ import {
 import React, { useState, useEffect } from "react";
 import { Stack, useLocalSearchParams, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import Post from "@/components/Post";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { fetchData } from "@/utils/api";
 import { storeData, getData } from "@/utils/storage";
 import { useTranslation } from "react-i18next";
-import { Post as PostType } from "@/constants/sampleData";
+
+type Content = {
+  id: string;
+  title: string;
+  description: string;
+  type: "meditation" | "sleep" | "mindfulness";
+  image: string;
+};
 
 export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const [content, setContent] = useState<Content[]>([]);
   const colorScheme = useColorScheme();
   const { t } = useTranslation();
 
@@ -27,72 +33,53 @@ export default function HomeScreen() {
     setTimeout(() => setRefreshing(false), 2000);
   }, []);
 
-  type PostAPIResponse = {
-    id: string;
-    text: string;
-    created_at: string;
-    author: {
-      name: string;
-      image: string;
-      username: string;
-    };
-  };
-
-  const retrievePostsFromAPI = async () => {
+  const retrieveContentFromAPI = async () => {
     try {
-      const response = await fetchData("posts");
-      const posts = response.posts.map((post: PostAPIResponse) => ({
-        id: post.id,
-        user: {
-          name: post.author?.name || "Unknown",
-          avatar: post.author?.image || "https://via.placeholder.com/50",
-          username: post.author?.username || "unknown",
-        },
-        content: decodeURIComponent(post.text),
-        timestamp: new Date(post.created_at).toLocaleTimeString(),
+      const response = await fetchData("content");
+      const content = response.content.map((item: Content) => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        type: item.type,
+        image: item.image,
       }));
-      await storeData("posts", posts);
-      setPosts(posts);
+      await storeData("content", content);
+      setContent(content);
     } catch (error) {
-      console.error("Error retrieving posts from API:", error);
+      console.error("Error retrieving content from API:", error);
     }
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const storedPosts = await getData("posts");
-      if (storedPosts) {
-        setPosts(storedPosts);
+    const fetchContent = async () => {
+      const storedContent = await getData("content");
+      if (storedContent) {
+        setContent(storedContent);
       } else {
-        retrievePostsFromAPI();
+        retrieveContentFromAPI();
       }
     };
 
-    fetchPosts();
+    fetchContent();
   }, []);
+
+  const renderContentItem = ({ item }: { item: Content }) => (
+    <TouchableOpacity style={styles.contentItem}>
+      <ThemedText style={styles.contentTitle}>{item.title}</ThemedText>
+      <ThemedText style={styles.contentDescription}>
+        {item.description}
+      </ThemedText>
+      <ThemedText style={styles.contentType}>{item.type}</ThemedText>
+    </TouchableOpacity>
+  );
 
   return (
     <>
       <Stack.Screen options={{ title: t("Home"), headerBackVisible: false }} />
       <ThemedView style={styles.container}>
         <FlatList
-          data={posts}
-          renderItem={({ item }) => (
-            <Post
-              id={item.id}
-              avatar={item.avatar}
-              name={item.name}
-              username={item.username}
-              content={item.content}
-              time={item.time}
-              likes={item.likes}
-              reposts={item.reposts}
-              replies={item.replies}
-              images={item.images}
-              poll={item.poll}
-              location={item.location}
-            />
-          )}
+          data={content}
+          renderItem={renderContentItem}
           keyExtractor={(item) => item.id.toString()}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -122,5 +109,22 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 9999,
     elevation: 4,
+  },
+  contentItem: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e1e8ed",
+  },
+  contentTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  contentDescription: {
+    fontSize: 14,
+    color: "#657786",
+  },
+  contentType: {
+    fontSize: 12,
+    color: "#1DA1F2",
   },
 });
