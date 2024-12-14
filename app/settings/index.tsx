@@ -2,31 +2,13 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, ScrollView, SafeAreaView, TouchableOpacity, FlatList } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
-import Post from "@/components/Post";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, Link } from "expo-router";
 
-
 const languages = ["en", "es", "it"];
 const colors = ["#1DA1F2", "#FF5733", "#33FF57", "#3357FF"];
-
-const post = {
-  id: "16",
-  avatar: "/assets/images/favicon.png",
-  name: "Mention",
-  username: "@mention",
-  content:
-    "At the heart of Mention are short messages called Posts — just like this one — which can include photos, videos, links, text, hashtags, and mentions like @Oxy.",
-  time: "16m",
-  likes: 7,
-  reposts: 3,
-  replies: 2,
-  isReply: false,
-  hasMedia: false,
-  isLiked: true,
-};
 
 interface SettingItemProps {
   icon: string;
@@ -56,7 +38,7 @@ const SettingsHeader: React.FC = () => {
     <View style={styles.headerContainer}>
       <Text style={styles.headerTitle}>{t("Customize your view")}</Text>
       <Text style={styles.headerSubtitle}>
-        {t("These settings affect all the Mention accounts on this device.")}
+        {t("These settings affect all the Shh accounts on this device.")}
       </Text>
     </View>
   );
@@ -169,9 +151,6 @@ export default function SettingsScreen() {
       <Stack.Screen options={{ title: t("Settings") }} />
       <SafeAreaView style={styles.container}>
         <SettingsHeader />
-        <ThemedView style={styles.container}>
-          {post && <Post {...post} showActions={false} />}
-        </ThemedView>
         <SettingsSearch onSearch={setSearchText} />
         <FlatList
           style={styles.scrollView}

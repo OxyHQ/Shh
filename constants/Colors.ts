@@ -3,24 +3,24 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-const tintColorLight = "#0a7ea4";
-const tintColorDark = "#fff";
+const tintColorLight = "#FF7F50"; // Headspace primary color
+const tintColorDark = "#FF7F50"; // Headspace primary color
 
 export const Colors = {
   light: {
-    text: "#11181C",
-    background: "#1d9bf01a",
+    text: "#333333", // Headspace text color
+    background: "#FFFFFF", // Headspace background color
     tint: tintColorLight,
-    icon: "#687076",
-    tabIconDefault: "#687076",
+    icon: "#FF7F50", // Headspace icon color
+    tabIconDefault: "#CCCCCC", // Headspace tab icon default color
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: "#ECEDEE",
-    background: "#151718",
+    text: "#FFFFFF", // Headspace text color
+    background: "#000000", // Headspace background color
     tint: tintColorDark,
-    icon: "#9BA1A6",
-    tabIconDefault: "#9BA1A6",
+    icon: "#FF7F50", // Headspace icon color
+    tabIconDefault: "#666666", // Headspace tab icon default color
     tabIconSelected: tintColorDark,
   },
 };
