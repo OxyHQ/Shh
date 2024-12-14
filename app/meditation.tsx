@@ -19,7 +19,14 @@ const meditations = [
   // Add more meditations
 ];
 
-const MeditationItem = ({ meditation }) => (
+interface Meditation {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
+const MeditationItem = ({ meditation }: { meditation: Meditation }) => (
   <TouchableOpacity style={styles.meditationItem}>
     <Image source={{ uri: meditation.image }} style={styles.meditationImage} />
     <View style={styles.meditationContent}>
