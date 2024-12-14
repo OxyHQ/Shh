@@ -34,6 +34,18 @@ export const BottomBar = () => {
                 <Ionicons name="leaf" size={28} color={activeRoute === '/mindfulness' ? '#6200ee' : '#757575'} />
                 <Text style={[styles.label, activeRoute === '/mindfulness' && styles.activeLabel]}>Mindfulness</Text>
             </Pressable>
+            <Pressable onPress={() => handlePress('/explore')} style={[styles.tab, activeRoute === '/explore' && styles.active]}>
+                <Ionicons name="search" size={28} color={activeRoute === '/explore' ? '#6200ee' : '#757575'} />
+                <Text style={[styles.label, activeRoute === '/explore' && styles.activeLabel]}>Explore</Text>
+            </Pressable>
+            <Pressable onPress={() => handlePress('/notifications')} style={[styles.tab, activeRoute === '/notifications' && styles.active]}>
+                <Ionicons name="notifications" size={28} color={activeRoute === '/notifications' ? '#6200ee' : '#757575'} />
+                <Text style={[styles.label, activeRoute === '/notifications' && styles.activeLabel]}>Notifications</Text>
+            </Pressable>
+            <Pressable onPress={() => handlePress('/messages')} style={[styles.tab, activeRoute === '/messages' && styles.active]}>
+                <Ionicons name="mail" size={28} color={activeRoute === '/messages' ? '#6200ee' : '#757575'} />
+                <Text style={[styles.label, activeRoute === '/messages' && styles.activeLabel]}>Messages</Text>
+            </Pressable>
         </View>
     );
 };

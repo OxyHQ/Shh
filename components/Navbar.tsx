@@ -15,7 +15,8 @@ export function Navbar() {
         href="/notifications"
       />
       <NavItem icon="mail-outline" label="Messages" href="/messages" />
-      <NavItem icon="person-outline" label="Profileeeee" href="/@johndoe" />
+      <NavItem icon="person-outline" label="Profile" href="/@johndoe" />
+      <NavItem icon="settings-outline" label="Settings" href="/settings" />
     </View>
   );
 }
@@ -42,6 +43,12 @@ function NavItem({
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e1e8ed",
   },
   navItem: {
     flexDirection: "row",

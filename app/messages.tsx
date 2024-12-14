@@ -91,6 +91,15 @@ const Header = () => (
 export default function MessagesScreen() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    showImages: true,
+    showVideos: true,
+    showText: true,
+  });
+
+  const handleFilterChange = (filter: keyof typeof filters, value: boolean) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
+  };
 
   const filteredMessages = messages.filter((message) =>
     message.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -113,6 +122,30 @@ export default function MessagesScreen() {
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
+        <View style={styles.filtersContainer}>
+          <ThemedText>{t("Filters")}</ThemedText>
+          <View style={styles.filterItem}>
+            <ThemedText>{t("Show Images")}</ThemedText>
+            <Switch
+              value={filters.showImages}
+              onValueChange={(value) => handleFilterChange("showImages", value)}
+            />
+          </View>
+          <View style={styles.filterItem}>
+            <ThemedText>{t("Show Videos")}</ThemedText>
+            <Switch
+              value={filters.showVideos}
+              onValueChange={(value) => handleFilterChange("showVideos", value)}
+            />
+          </View>
+          <View style={styles.filterItem}>
+            <ThemedText>{t("Show Text")}</ThemedText>
+            <Switch
+              value={filters.showText}
+              onValueChange={(value) => handleFilterChange("showText", value)}
+            />
+          </View>
+        </View>
         <FlatList
           data={filteredMessages}
           renderItem={({ item }) => <MessageItem message={item} />}
@@ -196,5 +229,14 @@ const styles = StyleSheet.create({
   },
   timestamp: {
     color: "gray",
+  },
+  filtersContainer: {
+    marginBottom: 16,
+  },
+  filterItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
   },
 });

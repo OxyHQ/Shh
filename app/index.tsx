@@ -3,6 +3,8 @@ import {
   RefreshControl,
   StyleSheet,
   TouchableOpacity,
+  View,
+  Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Stack, useLocalSearchParams, router } from "expo-router";
@@ -13,6 +15,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { fetchData } from "@/utils/api";
 import { storeData, getData } from "@/utils/storage";
 import { useTranslation } from "react-i18next";
+import { BottomBar } from "@/components/BottomBar";
 
 type Content = {
   id: string;
@@ -65,11 +68,14 @@ export default function HomeScreen() {
 
   const renderContentItem = ({ item }: { item: Content }) => (
     <TouchableOpacity style={styles.contentItem}>
-      <ThemedText style={styles.contentTitle}>{item.title}</ThemedText>
-      <ThemedText style={styles.contentDescription}>
-        {item.description}
-      </ThemedText>
-      <ThemedText style={styles.contentType}>{item.type}</ThemedText>
+      <Image source={{ uri: item.image }} style={styles.contentImage} />
+      <View style={styles.contentTextContainer}>
+        <ThemedText style={styles.contentTitle}>{item.title}</ThemedText>
+        <ThemedText style={styles.contentDescription}>
+          {item.description}
+        </ThemedText>
+        <ThemedText style={styles.contentType}>{item.type}</ThemedText>
+      </View>
     </TouchableOpacity>
   );
 
@@ -91,6 +97,7 @@ export default function HomeScreen() {
         >
           <Ionicons name="create-outline" size={24} color="#FFFFFF" />
         </TouchableOpacity>
+        <BottomBar />
       </ThemedView>
     </>
   );
@@ -114,6 +121,17 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#e1e8ed",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  contentImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 16,
+  },
+  contentTextContainer: {
+    flex: 1,
   },
   contentTitle: {
     fontSize: 18,

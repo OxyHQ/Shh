@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   Modal,
+  Picker,
 } from "react-native";
 import { Stack, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,7 +23,7 @@ import { storeData } from "@/utils/storage";
 
 export default function ComposeScreen() {
   const [posts, setPosts] = useState<Post[]>([
-    { id: 1, content: "", images: [], location: "", type: "meditation", details: "" },
+    { id: 1, content: "", images: [], location: "", type: "meditation", details: "", tags: [], category: "" },
   ]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -63,6 +64,8 @@ export default function ComposeScreen() {
     location: string;
     type: "meditation" | "sleep" | "mindfulness";
     details: string;
+    tags: string[];
+    category: string;
   }
 
   const handleContentChange = (id: number, content: string) => {
@@ -83,10 +86,22 @@ export default function ComposeScreen() {
     );
   };
 
+  const handleTagsChange = (id: number, tags: string[]) => {
+    setPosts(
+      posts.map((post: Post) => (post.id === id ? { ...post, tags } : post))
+    );
+  };
+
+  const handleCategoryChange = (id: number, category: string) => {
+    setPosts(
+      posts.map((post: Post) => (post.id === id ? { ...post, category } : post))
+    );
+  };
+
   const addNewPost = () => {
     setPosts([
       ...posts,
-      { id: posts.length + 1, content: "", images: [], location: "", type: "meditation", details: "" },
+      { id: posts.length + 1, content: "", images: [], location: "", type: "meditation", details: "", tags: [], category: "" },
     ]);
   };
 
@@ -242,6 +257,25 @@ export default function ComposeScreen() {
               {characterCount}/{maxLength}
             </ThemedText>
           </View>
+        </View>
+        <View style={styles.tagCategoryContainer}>
+          <TextInput
+            style={styles.tagInput}
+            placeholder="Add tags"
+            placeholderTextColor="#657786"
+            value={item.tags.join(", ")}
+            onChangeText={(text) => handleTagsChange(item.id, text.split(", "))}
+          />
+          <Picker
+            selectedValue={item.category}
+            style={styles.categoryPicker}
+            onValueChange={(itemValue) => handleCategoryChange(item.id, itemValue)}
+          >
+            <Picker.Item label="Select category" value="" />
+            <Picker.Item label="Meditation" value="meditation" />
+            <Picker.Item label="Sleep" value="sleep" />
+            <Picker.Item label="Mindfulness" value="mindfulness" />
+          </Picker>
         </View>
         {posts.length > 1 && (
           <TouchableOpacity style={styles.reorderIcon} onPressIn={drag}>
@@ -483,5 +517,21 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
+  },
+  tagCategoryContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 12,
+  },
+  tagInput: {
+    flex: 1,
+    fontSize: 16,
+    color: "#14171A",
+    marginRight: 8,
+  },
+  categoryPicker: {
+    flex: 1,
+    height: 50,
   },
 });

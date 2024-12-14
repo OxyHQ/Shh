@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stack, router } from "expo-router";
-import { View, Text, FlatList, StyleSheet, Image } from "react-native";
+import { View, Text, FlatList, StyleSheet, Image, Switch, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
@@ -70,13 +70,44 @@ export default function NotificationsScreen() {
   const [unreadCount, setUnreadCount] = useState(
     notifications.filter((notification) => !notification.read).length
   );
+  const [filters, setFilters] = useState({
+    showLikes: true,
+    showReposts: true,
+  });
+
+  const handleFilterChange = (filter: keyof typeof filters, value: boolean) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
+  };
+
+  const filteredNotifications = notifications.filter((notification) => {
+    if (!filters.showLikes && notification.type === "like") return false;
+    if (!filters.showReposts && notification.type === "repost") return false;
+    return true;
+  });
 
   return (
     <>
       <Stack.Screen options={{ title: `${t("Notifications")} (${unreadCount})` }} />
       <ThemedView style={styles.container}>
+        <View style={styles.filtersContainer}>
+          <ThemedText>{t("Filters")}</ThemedText>
+          <View style={styles.filterItem}>
+            <ThemedText>{t("Show Likes")}</ThemedText>
+            <Switch
+              value={filters.showLikes}
+              onValueChange={(value) => handleFilterChange("showLikes", value)}
+            />
+          </View>
+          <View style={styles.filterItem}>
+            <ThemedText>{t("Show Reposts")}</ThemedText>
+            <Switch
+              value={filters.showReposts}
+              onValueChange={(value) => handleFilterChange("showReposts", value)}
+            />
+          </View>
+        </View>
         <FlatList
-          data={notifications}
+          data={filteredNotifications}
           renderItem={({ item }) => <NotificationItem notification={item} />}
           keyExtractor={(item) => item.id}
         />
@@ -118,5 +149,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+  filtersContainer: {
+    marginBottom: 16,
+  },
+  filterItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
   },
 });
