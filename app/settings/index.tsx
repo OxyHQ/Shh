@@ -139,6 +139,24 @@ export default function SettingsScreen() {
       subtitle: batteryLevel !== null ? `${Math.round(batteryLevel * 100)}%` : t('Loading...'),
       link: "/settings/battery",
     },
+    {
+      icon: 'meditation',
+      title: t('Meditation Preferences'),
+      subtitle: t('Manage your meditation settings'),
+      link: "/settings/meditation",
+    },
+    {
+      icon: 'bed',
+      title: t('Sleep Settings'),
+      subtitle: t('Manage your sleep settings'),
+      link: "/settings/sleep",
+    },
+    {
+      icon: 'mindfulness',
+      title: t('Mindfulness Goals'),
+      subtitle: t('Manage your mindfulness goals'),
+      link: "/settings/mindfulness",
+    },
   ];
 
   const filteredSettings = settings.filter(setting =>
