@@ -120,11 +120,9 @@ export default function RootLayout() {
                   },
                 }}>
                 <Stack.Screen name="index" />
-                <Stack.Screen name="@[username]/index" />
-                <Stack.Screen name="bookmarks/index" />
-                <Stack.Screen name="compose" />
-                <Stack.Screen name="messages" />
-                <Stack.Screen name="explore" />
+                <Stack.Screen name="meditation" />
+                <Stack.Screen name="sleep" />
+                <Stack.Screen name="mindfulness" />
                 <Stack.Screen name="settings/display" />
                 <Stack.Screen name="settings/index" />
               </Stack>
