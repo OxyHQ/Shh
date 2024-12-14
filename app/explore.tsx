@@ -76,7 +76,7 @@ export default function SearchScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: "Search" }} />
+      <Stack.Screen options={{ title: "Explore" }} />
       <ThemedView style={styles.container}>
         <View style={styles.searchContainer}>
           <Ionicons
@@ -159,45 +159,71 @@ export default function SearchScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    // ...existing code...
+    flex: 1,
+    padding: 16,
+    backgroundColor: "#fff",
   },
   searchContainer: {
-    // ...existing code...
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f1f1f1",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    marginBottom: 16,
   },
   searchIcon: {
-    // ...existing code...
+    marginRight: 8,
   },
   searchInput: {
-    // ...existing code...
+    flex: 1,
+    fontSize: 16,
+    color: "#333",
   },
   trendsHeader: {
-    // ...existing code...
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
   },
   trendsList: {
-    // ...existing code...
+    marginBottom: 16,
   },
   resultContainer: {
-    // ...existing code...
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e1e8ed",
   },
   avatar: {
-    // ...existing code...
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 12,
   },
   resultContent: {
-    // ...existing code...
+    flex: 1,
   },
   userName: {
-    // ...existing code...
+    fontWeight: "bold",
+    fontSize: 16,
+    marginBottom: 4,
   },
   resultText: {
-    // ...existing code...
+    fontSize: 14,
+    color: "#657786",
   },
   timestamp: {
-    // ...existing code...
+    fontSize: 12,
+    color: "#657786",
   },
   filtersContainer: {
-    // ...existing code...
+    marginBottom: 16,
   },
   filterItem: {
-    // ...existing code...
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
   },
 });
